@@ -1,0 +1,62 @@
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(190) NOT NULL UNIQUE,
+  phone VARCHAR(30) NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(30) NOT NULL DEFAULT 'buyer',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE merchants (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  business_name VARCHAR(190) NOT NULL,
+  category VARCHAR(120) NULL,
+  description TEXT NULL,
+  address VARCHAR(255) NULL,
+  latitude DECIMAL(10,7) NULL,
+  longitude DECIMAL(10,7) NULL,
+  verified TINYINT(1) NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  merchant_id INT NOT NULL,
+  title VARCHAR(190) NOT NULL,
+  slug VARCHAR(220) NOT NULL,
+  description TEXT NULL,
+  price DECIMAL(12,2) NOT NULL DEFAULT 0,
+  category VARCHAR(120) NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'draft',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE services (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  merchant_id INT NOT NULL,
+  title VARCHAR(190) NOT NULL,
+  price_from DECIMAL(12,2) NULL,
+  location VARCHAR(255) NULL,
+  availability JSON NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  buyer_id INT NOT NULL,
+  merchant_id INT NOT NULL,
+  product_id INT NULL,
+  amount DECIMAL(12,2) NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE escrows (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL,
+  amount DECIMAL(12,2) NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'held',
+  released_at TIMESTAMP NULL
+);
