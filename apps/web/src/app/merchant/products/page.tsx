@@ -1,0 +1,52 @@
+import Link from "next/link";
+import { Plus, Pencil, Eye, Trash2 } from "lucide-react";
+import { AccountShell, StatusPill } from "@/components/account-shell";
+import { products, money } from "@/lib/data";
+
+const nav = [
+  { href: "/merchant/dashboard", label: "Dashboard", icon: "📊" },
+  { href: "/merchant/products", label: "My listings", icon: "🏷️" },
+  { href: "/merchant/orders", label: "Orders", icon: "📦" },
+  { href: "/merchant/bookings", label: "Bookings", icon: "📅" },
+  { href: "/merchant/wallet", label: "Wallet & escrow", icon: "🛡️" },
+  { href: "/merchant/messages", label: "Messages", icon: "💬" },
+  { href: "/merchant/kyc", label: "Verification", icon: "✅" },
+];
+
+export default function MerchantProducts() {
+  const mine = products.slice(0, 8);
+  return (
+    <AccountShell title="Merchant hub" name="PhoneHub Kenya" meta="Verified seller · CBD" items={nav} active="/merchant/products">
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-xl font-extrabold">My listings ({mine.length})</h1>
+        <Link href="/merchant/products/new" className="btn btn-primary btn-sm"><Plus size={15} /> Add listing</Link>
+      </div>
+
+      <div className="mb-4 flex gap-2">
+        {["All", "ACTIVE", "DRAFT", "SUSPENDED"].map((t, i) => (
+          <button key={t} className={`chip ${i === 0 ? "chip-active" : ""}`}>{t}</button>
+        ))}
+      </div>
+
+      <div className="card divide-y">
+        {mine.map((p) => (
+          <div key={p.id} className="flex items-center gap-3 p-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={p.image} alt="" className="h-14 w-14 rounded-lg object-cover" />
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm font-semibold">{p.title}</div>
+              <div className="text-xs text-muted">{p.category} · {p.stock ?? "∞"} in stock · {p.postedAt}</div>
+            </div>
+            <StatusPill s={p.status ?? "ACTIVE"} />
+            <b className="hidden text-sm sm:block">{money(p.price)}</b>
+            <div className="flex gap-1">
+              <button className="grid h-8 w-8 place-items-center rounded-lg hover:bg-gray-100"><Eye size={15} className="text-muted" /></button>
+              <button className="grid h-8 w-8 place-items-center rounded-lg hover:bg-gray-100"><Pencil size={15} className="text-muted" /></button>
+              <button className="grid h-8 w-8 place-items-center rounded-lg hover:bg-gray-100"><Trash2 size={15} className="text-danger" /></button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </AccountShell>
+  );
+}
