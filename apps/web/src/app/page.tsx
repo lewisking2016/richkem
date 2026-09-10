@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ShieldCheck, Zap, Store, ChevronRight, Star, Truck, Timer, BadgeCheck } from "lucide-react";
+import { ShieldCheck, Store, ChevronRight, Star, Timer, BadgeCheck, Zap, Ship, Package } from "lucide-react";
 import { ListingCard, ListingRow, SectionHead, CategoryTile } from "@/components/listing";
 import { ProviderCard } from "@/components/provider-card";
+import { ecoGroupIcons, serviceCategoryIcons, PersonIcon, BusinessIcon } from "@/components/icons";
 import { featured, flashDeals, services, categories, serviceCategories, products, money } from "@/lib/data";
 import { providers, ecoGroups, ecoListings } from "@/lib/providers";
 
@@ -80,19 +81,24 @@ export default function Home() {
       <section>
         <SectionHead title="Find a service near you" href="/services" accent="jiji" />
         <div className="grid grid-cols-4 gap-3 md:grid-cols-8">
-          {serviceCategories.map((c) => (
-            <Link key={c.slug} href={`/services/${c.slug}`} className="card card-hover flex flex-col items-center gap-2 p-3.5 text-center">
-              <span className="text-2xl">{c.icon}</span>
-              <span className="text-[11px] font-semibold leading-tight">{c.name}</span>
-            </Link>
-          ))}
+          {serviceCategories.map((c) => {
+            const Icon = serviceCategoryIcons[c.slug] ?? serviceCategoryIcons.doctors;
+            return (
+              <Link key={c.slug} href={`/services/${c.slug}`} className="card card-hover flex flex-col items-center gap-2 p-3.5 text-center">
+                <span className="bg-jiji-50 text-jiji grid h-11 w-11 place-items-center rounded-xl">
+                  <Icon size={22} strokeWidth={2} />
+                </span>
+                <span className="text-[11px] font-semibold leading-tight">{c.name}</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
       {/* FLASH DEALS — calm, no screaming banner */}
       <section>
         <div className="mb-3 flex items-center gap-3">
-          <h2 className="section-title border-l-4 border-brand pl-2.5">⚡ Flash deals</h2>
+          <h2 className="section-title border-l-4 border-brand pl-2.5">Flash deals</h2>
           <span className="badge bg-danger-50 text-danger"><Timer size={11} /> 04:12:38</span>
           <Link href="/search" className="text-brand ml-auto text-sm font-semibold hover:underline">See all →</Link>
         </div>
@@ -105,13 +111,18 @@ export default function Home() {
       <section>
         <SectionHead title="The everything marketplace" />
         <div className="grid gap-3 md:grid-cols-5">
-          {ecoGroups.map((g) => (
-            <Link key={g.slug} href={`/market/${g.slug}`} className="card card-hover group p-4">
-              <span className="text-3xl">{g.icon}</span>
-              <div className="mt-2 font-bold group-hover:text-brand">{g.label}</div>
-              <div className="text-xs text-muted">{g.blurb}</div>
-            </Link>
-          ))}
+          {ecoGroups.map((g) => {
+            const Icon = ecoGroupIcons[g.slug] ?? ecoGroupIcons.containers;
+            return (
+              <Link key={g.slug} href={`/market/${g.slug}`} className="card card-hover group p-4">
+                <span className="bg-brand-50 text-brand grid h-12 w-12 place-items-center rounded-xl">
+                  <Icon size={24} strokeWidth={2} />
+                </span>
+                <div className="mt-2 font-bold group-hover:text-brand">{g.label}</div>
+                <div className="text-xs text-muted">{g.blurb}</div>
+              </Link>
+            );
+          })}
         </div>
         <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
           {ecoListings.slice(0, 4).map((e) => (

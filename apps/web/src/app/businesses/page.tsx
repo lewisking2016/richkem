@@ -10,7 +10,7 @@ export default function Businesses() {
   return (
     <div className="space-y-6">
       <div className="card bg-gradient-to-r from-jiji to-jiji-600 p-6 text-white md:p-8">
-        <span className="badge bg-white/15 text-white">🏢 BUSINESSES</span>
+        <span className="badge bg-white/15 text-white">BUSINESSES</span>
         <h1 className="mt-3 text-3xl font-black">Companies you can trade with — safely.</h1>
         <p className="mt-2 max-w-xl text-sm text-white/85">
           Clearing agents, freight companies, garages, clinics and machinery dealers. Registered, KYC-verified, escrow-backed.

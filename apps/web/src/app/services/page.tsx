@@ -2,6 +2,7 @@ import { services, serviceCategories } from "@/lib/data";
 import { providers } from "@/lib/providers";
 import { ListingRow, SectionHead } from "@/components/listing";
 import { ProviderCard } from "@/components/provider-card";
+import { serviceCategoryIcons } from "@/components/icons";
 import Link from "next/link";
 
 export const metadata = { title: "Services" };
@@ -17,12 +18,17 @@ export default function ServicesHub() {
       <section>
         <SectionHead title="Browse by category" accent="jiji" />
         <div className="grid grid-cols-4 gap-3 md:grid-cols-8">
-          {serviceCategories.map((c) => (
-            <Link key={c.slug} href={`/services/${c.slug}`} className="card flex flex-col items-center gap-2 p-3 text-center hover:shadow-md">
-              <span className="text-2xl">{c.icon}</span>
-              <span className="text-[11px] font-semibold">{c.name}</span>
-            </Link>
-          ))}
+          {serviceCategories.map((c) => {
+            const Icon = serviceCategoryIcons[c.slug] ?? serviceCategoryIcons.doctors;
+            return (
+              <Link key={c.slug} href={`/services/${c.slug}`} className="card card-hover flex flex-col items-center gap-2 p-3 text-center">
+                <span className="bg-jiji-50 text-jiji grid h-11 w-11 place-items-center rounded-xl">
+                  <Icon size={21} strokeWidth={2} />
+                </span>
+                <span className="text-[11px] font-semibold">{c.name}</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

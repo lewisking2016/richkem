@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { serviceCategories } from "@/lib/data";
 import { providers } from "@/lib/providers";
+import { serviceCategoryIcons } from "@/components/icons";
 import { ProviderCard } from "@/components/provider-card";
 
 export default async function ServiceCategory({ params }: { params: Promise<{ slug: string }> }) {
@@ -12,7 +13,9 @@ export default async function ServiceCategory({ params }: { params: Promise<{ sl
   return (
     <div className="space-y-5">
       <div className="card flex items-center gap-4 p-5">
-        <span className="text-4xl">{cat.icon}</span>
+        <span className="bg-jiji-50 text-jiji grid h-14 w-14 place-items-center rounded-2xl">
+          {(() => { const Icon = serviceCategoryIcons[cat.slug] ?? serviceCategoryIcons.doctors; return <Icon size={28} strokeWidth={2} />; })()}
+        </span>
         <div>
           <h1 className="text-2xl font-extrabold">{cat.name}</h1>
           <p className="text-sm text-muted">Verified providers · escrow-protected bookings · reviews from real clients</p>

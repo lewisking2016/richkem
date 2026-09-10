@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* Refined identity — richer orange, semantic green reserved ONLY for trust/escrow */
-  --color-brand: #f68b1e;
-  --color-brand-600: #e07c12;
-  --color-brand-700: #b8610a;
-  --color-brand-50: #fef4ea;
+  /* Jungle green identity — payment-trust color, white text passes 4.5:1 */
+  --color-brand: #0f8a47;
+  --color-brand-600: #0c7439;
+  --color-brand-700: #0a5e2f;
+  --color-brand-50: #e9f7ef;
   --color-jiji: #0b3fae;
   --color-jiji-600: #093491;
   --color-jiji-50: #edf2ff;
@@ -56,8 +56,8 @@
   transition-timing-function: var(--ease-out-soft);
 }
 .btn:active { transform: scale(0.98); }
-.btn-primary { background: var(--color-brand); color: #fff; box-shadow: 0 6px 16px rgb(246 139 30 / 0.30); }
-.btn-primary:hover { background: var(--color-brand-600); box-shadow: 0 8px 22px rgb(246 139 30 / 0.40); transform: translateY(-1px); }
+.btn-primary { background: var(--color-brand); color: #fff; box-shadow: 0 6px 16px rgb(15 138 71 / 0.30); }
+.btn-primary:hover { background: var(--color-brand-600); box-shadow: 0 8px 22px rgb(15 138 71 / 0.40); transform: translateY(-1px); }
 .btn-dark { background: var(--color-ink); color: #fff; }
 .btn-dark:hover { background: #000; transform: translateY(-1px); }
 .btn-outline { background: #fff; color: var(--color-ink); border: 1.5px solid var(--color-line); }
@@ -110,7 +110,7 @@
   font-size: 15px;
   transition: border-color 160ms, box-shadow 160ms;
 }
-.input:focus { border-color: var(--color-brand); box-shadow: 0 0 0 4px rgb(246 139 30 / 0.13); }
+.input:focus { border-color: var(--color-brand); box-shadow: 0 0 0 4px rgb(15 138 71 / 0.13); }
 .input::placeholder { color: rgb(111 114 118 / 0.65); }
 
 .label { @apply block font-semibold; font-size: 13.5px; margin-bottom: 6px; }

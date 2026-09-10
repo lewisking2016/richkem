@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { sidebarIcons } from "./icons";
 
 export interface NavItem { href: string; label: string; icon: string }
 
@@ -9,7 +10,6 @@ export function AccountShell({
   title: string; name: string; meta: string; items: NavItem[];
   active: string; children: ReactNode; accent?: "brand" | "jiji" | "ink";
 }) {
-  const icon = (e: string) => <span>{e}</span>;
   const accentBg = accent === "jiji" ? "bg-jiji" : accent === "ink" ? "bg-ink" : "bg-brand";
   return (
     <div className="grid gap-6 lg:grid-cols-[230px_1fr]">
@@ -23,12 +23,15 @@ export function AccountShell({
         </div>
         <div className="mt-2 border-t pt-2">
           <div className="px-2 pb-1 text-[11px] font-extrabold uppercase tracking-wide text-muted">{title}</div>
-          {items.map((i) => (
-            <Link key={i.href} href={i.href}
-              className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-semibold ${i.href === active ? `${accentBg} text-white` : "text-muted hover:bg-gray-50 hover:text-ink"}`}>
-              <span className="text-base">{icon(i.icon)}</span>{i.label}
-            </Link>
-          ))}
+          {items.map((i) => {
+            const Icon = sidebarIcons[i.icon] ?? sidebarIcons.dashboard;
+            return (
+              <Link key={i.href} href={i.href}
+                className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-semibold ${i.href === active ? `${accentBg} text-white` : "text-muted hover:bg-gray-50 hover:text-ink"}`}>
+                <Icon size={17} strokeWidth={2.1} />{i.label}
+              </Link>
+            );
+          })}
         </div>
       </aside>
       <section className="min-w-0 max-lg:order-1">{children}</section>

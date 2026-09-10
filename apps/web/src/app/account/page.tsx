@@ -1,21 +1,22 @@
 import Link from "next/link";
+import { ShieldCheck, ShoppingCart } from "lucide-react";
 import { AccountShell, StatCard, StatusPill } from "@/components/account-shell";
 import { buyerOrders, money } from "@/lib/data";
 
 const nav = [
-  { href: "/account", label: "Dashboard", icon: "🏠" },
-  { href: "/account/orders", label: "My orders", icon: "📦" },
-  { href: "/account/escrow", label: "Escrow", icon: "🛡️" },
-  { href: "/account/saved", label: "Saved items", icon: "❤️" },
-  { href: "/account/messages", label: "Messages", icon: "💬" },
-  { href: "/account/settings", label: "Settings", icon: "⚙️" },
+  { href: "/account", label: "Dashboard", icon: "dashboard" },
+  { href: "/account/orders", label: "My orders", icon: "orders" },
+  { href: "/account/escrow", label: "Escrow", icon: "escrow" },
+  { href: "/account/saved", label: "Saved items", icon: "saved" },
+  { href: "/account/messages", label: "Messages", icon: "messages" },
+  { href: "/account/settings", label: "Settings", icon: "settings" },
 ];
 
 export default function AccountDashboard() {
   const held = 66998; // 42999 + 23999
   return (
     <AccountShell title="My account" name="Wanjiku Kamau" meta="Buyer · Nairobi" items={nav} active="/account">
-      <h1 className="mb-4 text-xl font-extrabold">Habari, Wanjiku 👋</h1>
+      <h1 className="mb-4 text-xl font-extrabold">Habari, Wanjiku</h1>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <StatCard n={money(held)} t="In escrow now" sub="2 orders protected" tone="good" />
         <StatCard n="2" t="Active orders" sub="1 shipped, 1 delivered" />
@@ -48,11 +49,11 @@ export default function AccountDashboard() {
 
       <div className="mt-5 grid gap-3 md:grid-cols-2">
         <div className="card bg-money-50 p-4">
-          <h3 className="font-extrabold text-money">🛡️ How escrow protects you</h3>
+          <h3 className="text-money flex items-center gap-2 font-extrabold"><ShieldCheck size={18} /> How escrow protects you</h3>
           <p className="mt-1 text-sm text-muted">Money leaves your M-Pesa but stays locked. Seller ships. You confirm. Only then they're paid. Dispute anytime.</p>
         </div>
         <div className="card p-4">
-          <h3 className="font-extrabold">🛒 Finish where you left off</h3>
+          <h3 className="flex items-center gap-2 font-extrabold"><ShoppingCart size={18} className="text-brand" /> Finish where you left off</h3>
           <p className="mt-1 text-sm text-muted">Cart has 4 items · KES 64,996</p>
           <Link href="/cart" className="btn btn-primary btn-sm mt-3">Go to cart</Link>
         </div>

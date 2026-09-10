@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapPin, Star, ShieldCheck, Users } from "lucide-react";
+import { PersonIcon, BusinessIcon } from "./icons";
 import type { Provider } from "@/lib/providers";
 import { money } from "@/lib/data";
 
@@ -14,7 +15,7 @@ export function ProviderCard({ p }: { p: Provider }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
           <span className={`badge ${p.type === "person" ? "bg-brand-50 text-brand" : "bg-jiji-50 text-jiji"}`}>
-            {p.type === "person" ? "👤 Pro" : "🏢 Business"}
+            {p.type === "person" ? <><PersonIcon size={11} /> Pro</> : <><BusinessIcon size={11} /> Business</>}
           </span>
           {p.verified && <span className="badge bg-money-50 text-money"><ShieldCheck size={11} /> Verified</span>}
         </div>

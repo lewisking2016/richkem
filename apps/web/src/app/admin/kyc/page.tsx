@@ -2,11 +2,11 @@ import { AccountShell, StatusPill, StatCard } from "@/components/account-shell";
 import { merchantKyc } from "@/lib/data";
 
 const nav = [
-  { href: "/admin", label: "Overview", icon: "📈" },
-  { href: "/admin/kyc", label: "KYC queue", icon: "🪪" },
-  { href: "/admin/escrows", label: "Escrows", icon: "🛡️" },
-  { href: "/admin/disputes", label: "Disputes", icon: "⚔️" },
-  { href: "/admin/users", label: "Users & sellers", icon: "👥" },
+  { href: "/admin", label: "Overview", icon: "overview" },
+  { href: "/admin/kyc", label: "KYC queue", icon: "kyc" },
+  { href: "/admin/escrows", label: "Escrows", icon: "escrow" },
+  { href: "/admin/disputes", label: "Disputes", icon: "disputes" },
+  { href: "/admin/users", label: "Users & sellers", icon: "users" },
 ];
 
 export default function AdminKyc() {

@@ -1,5 +1,6 @@
 import { providers, proCategories } from "@/lib/providers";
 import { ProviderCard } from "@/components/provider-card";
+import { proCategoryIcons } from "@/components/icons";
 import { SectionHead } from "@/components/listing";
 import Link from "next/link";
 
@@ -10,7 +11,7 @@ export default function Professionals() {
   return (
     <div className="space-y-6">
       <div className="card bg-gradient-to-r from-brand to-brand-600 p-6 text-white md:p-8">
-        <span className="badge bg-white/15 text-white">👤 PROFESSIONALS</span>
+        <span className="badge bg-white/15 text-white">PROFESSIONALS</span>
         <h1 className="mt-3 text-3xl font-black">Verified people. Real specialities.</h1>
         <p className="mt-2 max-w-xl text-sm text-white/85">
           Doctors, lawyers, engineers, CPAs, IT pros — individual specialists with public profiles, ratings and escrow-protected engagements.
@@ -20,12 +21,17 @@ export default function Professionals() {
       <section>
         <SectionHead title="Browse specialities" />
         <div className="grid grid-cols-4 gap-3 md:grid-cols-8">
-          {proCategories.map((c) => (
-            <Link key={c.slug} href={`/professionals?spec=${c.slug}`} className="card flex flex-col items-center gap-2 p-3 text-center hover:shadow-md">
-              <span className="text-2xl">{c.icon}</span>
-              <span className="text-[11px] font-semibold leading-tight">{c.label}</span>
-            </Link>
-          ))}
+          {proCategories.map((c) => {
+            const Icon = proCategoryIcons[c.slug] ?? proCategoryIcons.consultants;
+            return (
+              <Link key={c.slug} href={`/professionals?spec=${c.slug}`} className="card card-hover flex flex-col items-center gap-2 p-3 text-center">
+                <span className="bg-brand-50 text-brand grid h-11 w-11 place-items-center rounded-xl">
+                  <Icon size={21} strokeWidth={2} />
+                </span>
+                <span className="text-[11px] font-semibold leading-tight">{c.label}</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

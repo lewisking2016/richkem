@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, ShieldCheck, MapPin } from "lucide-react";
+import { categoryIcons } from "./icons";
 import { money, type Listing } from "@/lib/data";
 
 const fmt = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -79,10 +80,13 @@ export function SectionHead({ title, href, accent = "brand" }: { title: string; 
   );
 }
 
-export function CategoryTile({ name, slug, icon, count }: { name: string; slug: string; icon: string; count?: number }) {
+export function CategoryTile({ name, slug, count }: { name: string; slug: string; count?: number }) {
+  const Icon = categoryIcons[slug] ?? categoryIcons.services;
   return (
-    <Link href={`/category/${slug}`} className="card flex flex-col items-center gap-2 p-4 text-center hover:shadow-md">
-      <span className="text-3xl">{icon}</span>
+    <Link href={`/category/${slug}`} className="card card-hover flex flex-col items-center gap-2 p-4 text-center">
+      <span className="bg-brand-50 text-brand grid h-11 w-11 place-items-center rounded-xl">
+        <Icon size={22} strokeWidth={2} />
+      </span>
       <span className="text-[13px] font-semibold leading-tight">{name}</span>
       {count !== undefined && <span className="text-[11px] text-muted">{count.toLocaleString()} ads</span>}
     </Link>

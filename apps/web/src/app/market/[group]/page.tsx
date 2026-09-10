@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { ecoGroups, ecoListings, providerById } from "@/lib/providers";
+import { ecoGroupIcons } from "@/components/icons";
 import { money } from "@/lib/data";
 import { ShieldCheck, MapPin } from "lucide-react";
 
@@ -12,7 +13,9 @@ export default async function EcoGroupPage({ params }: { params: Promise<{ group
   return (
     <div className="space-y-5">
       <div className="card flex items-center gap-4 p-5">
-        <span className="text-4xl">{g.icon}</span>
+        <span className="bg-brand-50 text-brand grid h-14 w-14 place-items-center rounded-2xl">
+          {(() => { const Icon = ecoGroupIcons[g.slug] ?? ecoGroupIcons.containers; return <Icon size={28} strokeWidth={2} />; })()}
+        </span>
         <div>
           <h1 className="text-2xl font-extrabold">{g.label}</h1>
           <p className="text-sm text-muted">{g.blurb} · escrow protected · countrywide</p>

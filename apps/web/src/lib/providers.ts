@@ -231,20 +231,20 @@ export const providerBySlug = (slug: string) => providers.find((p) => p.slug ===
 export const ecoBySlug = (slug: string) => ecoListings.find((e) => e.slug === slug);
 
 export const proCategories = [
-  { slug: "doctors", label: "Doctors & Health", icon: "🩺" },
-  { slug: "lawyers", label: "Lawyers", icon: "⚖️" },
-  { slug: "engineers", label: "Engineers", icon: "📐" },
-  { slug: "accountants", label: "Accountants & Tax", icon: "📊" },
-  { slug: "it", label: "IT & Tech", icon: "🖥️" },
-  { slug: "consultants", label: "Consultants", icon: "💼" },
-  { slug: "architects", label: "Architects", icon: "🏗️" },
-  { slug: "surveyors", label: "Surveyors", icon: "🗺️" },
+  { slug: "doctors", label: "Doctors & Health" },
+  { slug: "lawyers", label: "Lawyers" },
+  { slug: "engineers", label: "Engineers" },
+  { slug: "accountants", label: "Accountants & Tax" },
+  { slug: "it", label: "IT & Tech" },
+  { slug: "consultants", label: "Consultants" },
+  { slug: "architects", label: "Architects" },
+  { slug: "surveyors", label: "Surveyors" },
 ];
 
 export const ecoGroups = [
-  { slug: "containers", label: "Containers", icon: "🚢", blurb: "20FT · 40FT · reefer · storage" },
-  { slug: "vehicles", label: "Vehicles & Trucks", icon: "🚛", blurb: "saloon to 7T trucks" },
-  { slug: "machinery", label: "Plant Machinery", icon: "🏗️", blurb: "excavators · tractors · hire" },
-  { slug: "parts", label: "Spare Parts", icon: "⚙️", blurb: "genuine kits · fleet parts" },
-  { slug: "logistics", label: "Logistics & Freight", icon: "📦", blurb: "haulage · sea freight · clearing" },
+  { slug: "containers", label: "Containers", blurb: "20FT · 40FT · reefer · storage" },
+  { slug: "vehicles", label: "Vehicles & Trucks", blurb: "saloon to 7T trucks" },
+  { slug: "machinery", label: "Plant Machinery", blurb: "excavators · tractors · hire" },
+  { slug: "parts", label: "Spare Parts", blurb: "genuine kits · fleet parts" },
+  { slug: "logistics", label: "Logistics & Freight", blurb: "haulage · sea freight · clearing" },
 ];

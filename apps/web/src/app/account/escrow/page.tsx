@@ -2,12 +2,12 @@ import { AccountShell, StatusPill, StatCard } from "@/components/account-shell";
 import { buyerOrders, money } from "@/lib/data";
 
 const nav = [
-  { href: "/account", label: "Dashboard", icon: "🏠" },
-  { href: "/account/orders", label: "My orders", icon: "📦" },
-  { href: "/account/escrow", label: "Escrow", icon: "🛡️" },
-  { href: "/account/saved", label: "Saved items", icon: "❤️" },
-  { href: "/account/messages", label: "Messages", icon: "💬" },
-  { href: "/account/settings", label: "Settings", icon: "⚙️" },
+  { href: "/account", label: "Dashboard", icon: "dashboard" },
+  { href: "/account/orders", label: "My orders", icon: "orders" },
+  { href: "/account/escrow", label: "Escrow", icon: "escrow" },
+  { href: "/account/saved", label: "Saved items", icon: "saved" },
+  { href: "/account/messages", label: "Messages", icon: "messages" },
+  { href: "/account/settings", label: "Settings", icon: "settings" },
 ];
 
 export default function Escrow() {

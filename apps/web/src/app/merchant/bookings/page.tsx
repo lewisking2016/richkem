@@ -1,13 +1,13 @@
 import { AccountShell, StatusPill } from "@/components/account-shell";
 
 const nav = [
-  { href: "/merchant/dashboard", label: "Dashboard", icon: "📊" },
-  { href: "/merchant/products", label: "My listings", icon: "🏷️" },
-  { href: "/merchant/orders", label: "Orders", icon: "📦" },
-  { href: "/merchant/bookings", label: "Bookings", icon: "📅" },
-  { href: "/merchant/wallet", label: "Wallet & escrow", icon: "🛡️" },
-  { href: "/merchant/messages", label: "Messages", icon: "💬" },
-  { href: "/merchant/kyc", label: "Verification", icon: "✅" },
+  { href: "/merchant/dashboard", label: "Dashboard", icon: "dashboard" },
+  { href: "/merchant/products", label: "My listings", icon: "products" },
+  { href: "/merchant/orders", label: "Orders", icon: "orders" },
+  { href: "/merchant/bookings", label: "Bookings", icon: "bookings" },
+  { href: "/merchant/wallet", label: "Wallet & escrow", icon: "escrow" },
+  { href: "/merchant/messages", label: "Messages", icon: "messages" },
+  { href: "/merchant/kyc", label: "Verification", icon: "verification" },
 ];
 
 const bookings = [

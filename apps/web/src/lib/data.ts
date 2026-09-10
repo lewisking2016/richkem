@@ -92,27 +92,27 @@ export const sellers: Record<string, Seller> = {
 };
 
 export const categories = [
-  { name: "Phones & Tablets", slug: "phones-tablets", icon: "📱", count: 12450 },
-  { name: "Electronics", slug: "electronics", icon: "💻", count: 9830 },
-  { name: "Vehicles", slug: "vehicles", icon: "🚗", count: 2140 },
-  { name: "Home & Office", slug: "home-office", icon: "🛋️", count: 15600 },
-  { name: "Fashion", slug: "fashion", icon: "👕", count: 22310 },
-  { name: "Health & Beauty", slug: "health-beauty", icon: "💄", count: 8760 },
-  { name: "Aviation & Marine", slug: "aviation-marine", icon: "✈️", count: 48 },
-  { name: "Property", slug: "property", icon: "🏠", count: 3320 },
-  { name: "Services", slug: "services", icon: "🛠️", count: 5640 },
-  { name: "Jobs & Gigs", slug: "jobs", icon: "💼", count: 1980 },
+  { name: "Phones & Tablets", slug: "phones-tablets", count: 12450 },
+  { name: "Electronics", slug: "electronics", count: 9830 },
+  { name: "Vehicles", slug: "vehicles", count: 2140 },
+  { name: "Home & Office", slug: "home-office", count: 15600 },
+  { name: "Fashion", slug: "fashion", count: 22310 },
+  { name: "Health & Beauty", slug: "health-beauty", count: 8760 },
+  { name: "Aviation & Marine", slug: "aviation-marine", count: 48 },
+  { name: "Property", slug: "property", count: 3320 },
+  { name: "Services", slug: "services", count: 5640 },
+  { name: "Jobs & Gigs", slug: "jobs", count: 1980 },
 ];
 
 export const serviceCategories = [
-  { name: "Doctors & Clinics", slug: "doctors", icon: "🩺" },
-  { name: "Plumbers", slug: "plumbers", icon: "🔧" },
-  { name: "Lawyers", slug: "lawyers", icon: "⚖️" },
-  { name: "Mechanics", slug: "mechanics", icon: "🔩" },
-  { name: "Electricians", slug: "electricians", icon: "💡" },
-  { name: "Cleaning", slug: "cleaning", icon: "🧹" },
-  { name: "Tutors", slug: "tutors", icon: "📚" },
-  { name: "Event & Catering", slug: "events", icon: "🎉" },
+  { name: "Doctors & Clinics", slug: "doctors" },
+  { name: "Plumbers", slug: "plumbers" },
+  { name: "Lawyers", slug: "lawyers" },
+  { name: "Mechanics", slug: "mechanics" },
+  { name: "Electricians", slug: "electricians" },
+  { name: "Cleaning", slug: "cleaning" },
+  { name: "Tutors", slug: "tutors" },
+  { name: "Event & Catering", slug: "events" },
 ];
 
 function listing(
