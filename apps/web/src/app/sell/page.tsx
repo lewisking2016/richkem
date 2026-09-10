@@ -57,7 +57,7 @@ export default function SellLanding() {
           <div><label className="label">Phone (M-Pesa for payouts)</label><input className="input" placeholder="+254 7XX XXX XXX" /></div>
           <div><label className="label">Town / City</label><input className="input" placeholder="Nairobi" /></div>
         </div>
-        <Link href="/merchant/dashboard" className="btn btn-primary mt-4">Submit application</Link>
+        <Link href="/become-seller/welcome" className="btn btn-primary mt-4">Submit application</Link>
       </section>
     </div>
   );

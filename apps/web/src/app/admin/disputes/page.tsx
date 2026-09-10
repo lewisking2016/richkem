@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AccountShell, StatCard } from "@/components/account-shell";
 
 const nav = [
@@ -26,7 +27,7 @@ export default function AdminDisputes() {
 
       <div className="mt-5 space-y-3">
         {disputes.map((d) => (
-          <div key={d.id} className="card flex flex-wrap items-center gap-3 p-4">
+          <Link key={d.id} href={d.urgency === "HIGH" ? `/admin/disputes/${d.id.toLowerCase()}` : "/admin/disputes"} className="card card-hover flex flex-wrap items-center gap-3 p-4">
             <span className={`badge ${d.urgency === "HIGH" ? "bg-danger-50 text-danger" : "bg-gray-100 text-muted"}`}>{d.urgency}</span>
             <div className="min-w-0 flex-1">
               <div className="text-sm font-bold">{d.id} · {d.claim}</div>
@@ -41,7 +42,7 @@ export default function AdminDisputes() {
             ) : (
               <span className="badge bg-money-50 text-money">RESOLVED</span>
             )}
-          </div>
+          </Link>
         ))}
       </div>
       <p className="mt-3 text-xs text-muted">Resolutions write immutable ledger rows: REFUND (buyer) or RELEASE (seller). Both parties notified with the reason.</p>

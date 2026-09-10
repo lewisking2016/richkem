@@ -21,8 +21,8 @@ export default function Messages() {
     <AccountShell title="My account" name="Wanjiku Kamau" meta="Buyer · Nairobi" items={nav} active="/account/messages">
       <h1 className="mb-4 text-xl font-extrabold">Messages</h1>
       <div className="card divide-y">
-        {threads.map((t) => (
-          <Link key={t.name} href="#" className="flex items-center gap-3 p-4 hover:bg-gray-50">
+        {threads.map((t, i) => (
+          <Link key={t.name} href={`/account/messages/${i + 1}`} className="flex items-center gap-3 p-4 hover:bg-gray-50">
             <span className="bg-brand grid h-11 w-11 shrink-0 place-items-center rounded-full font-black text-white">{t.avatar}</span>
             <div className="min-w-0 flex-1">
               <div className="flex justify-between gap-2">

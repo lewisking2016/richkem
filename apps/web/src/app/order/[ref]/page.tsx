@@ -63,7 +63,7 @@ export default function OrderTracking({ params }: { params: Promise<{ ref: strin
           <div className="rounded-lg bg-money-50 p-4 text-sm">
             <div className="text-money flex items-center gap-2 font-bold"><CheckCircle2 size={15} /> Funds released to seller</div>
             <p className="mt-1 text-xs text-muted">{money(amount)} sent to the seller's wallet. Thanks for confirming — rate the seller to help other buyers.</p>
-            <button className="btn btn-outline btn-sm mt-3">Rate this order</button>
+            <Link href={`/order/${ref}/review`} className="btn btn-outline btn-sm mt-3">Rate this order</Link>
           </div>
         ) : (
           <div className="flex gap-2">

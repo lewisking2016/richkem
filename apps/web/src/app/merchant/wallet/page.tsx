@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AccountShell, StatCard } from "@/components/account-shell";
 import { walletLedger, money } from "@/lib/data";
 import { ArrowDownToLine } from "lucide-react";
@@ -27,7 +28,7 @@ export default function Wallet() {
       <div className="card mt-5 p-4">
         <div className="flex items-center justify-between">
           <h2 className="font-extrabold">Ledger — every shilling traced</h2>
-          <button className="btn btn-primary btn-sm"><ArrowDownToLine size={15} /> Withdraw to M-Pesa</button>
+          <Link href="/merchant/wallet/withdraw" className="btn btn-primary btn-sm"><ArrowDownToLine size={15} /> Withdraw to M-Pesa</Link>
         </div>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">

@@ -95,6 +95,7 @@ export default function Checkout() {
             <div className="mt-3 rounded-lg bg-money-50 p-4 text-sm">
               <div className="text-money flex items-center gap-2 font-bold"><CheckCircle2 size={15} /> M-Pesa number confirmed</div>
               <p className="mt-1 text-xs text-muted">You'll receive an STK push on <b>+254 712 *** 678</b>. Money is held by Richkem Escrow — the seller only gets paid after you confirm delivery.</p>
+              <Link href="/payment-failed" className="mt-2 inline-block text-[11px] font-semibold text-danger">What if payment fails?</Link>
             </div>
           )}
         </section>
