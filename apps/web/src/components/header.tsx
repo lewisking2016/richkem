@@ -16,13 +16,13 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
   return (
     <header className="sticky top-0 z-50 shadow-sm">
       {/* top strip */}
-      <div className={`${accent} text-white text-[13px]`}>
+      <div className={`${accent} text-white text-[12.5px]`}>
         <div className="mx-auto flex h-9 max-w-6xl items-center gap-4 px-4">
-          <Link href="/sell" className="font-semibold hover:underline">Sell on Richkem</Link>
+          <Link href="/sell" className="inline-flex items-center gap-1.5 font-bold hover:underline"><Store size={13} /> Sell on Richkem</Link>
           <Link href="/services" className="hidden hover:underline sm:inline">Services</Link>
-          <Link href="/professionals" className="hidden hover:underline sm:inline">Professionals</Link>
+          <Link href="/professionals" className="hidden hover:underline md:inline">Professionals</Link>
           <Link href="/businesses" className="hidden hover:underline md:inline">Businesses</Link>
-          <Link href="/market/containers" className="hidden hover:underline md:inline">Containers</Link>
+          <Link href="/market/containers" className="hidden hover:underline lg:inline">Containers</Link>
           <Link href="/market/logistics" className="hidden hover:underline lg:inline">Freight</Link>
           <Link href="/help" className="hidden hover:underline sm:inline">Help</Link>
           <div className="ml-auto flex items-center gap-4">
@@ -32,33 +32,33 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
         </div>
       </div>
 
-      {/* main bar */}
-      <div className="bg-white">
-        <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
+      {/* main bar — glass */}
+      <div className="glass border-b border-line/70">
+        <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
           <Link href="/" className="flex items-center gap-2">
-            <span className={`${accent} grid h-9 w-9 place-items-center rounded-lg text-lg font-black text-white`}>R</span>
-            <span className="hidden text-[17px] font-extrabold tracking-tight sm:block">
+            <span className={`${accent} grid h-10 w-10 place-items-center rounded-xl text-lg font-black text-white`}>R</span>
+            <span className="hidden text-[18px] font-black tracking-tight sm:block">
               Richkem<span className={variant === "services" ? "text-jiji" : "text-brand"}>.</span>
             </span>
           </Link>
 
           <form className="relative flex-1" action="/search">
-            <Search size={17} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+            <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
             <input
               name="q"
-              placeholder="Search products, services, brands and categories"
-              className="h-10 w-full rounded-lg border border-line bg-gray-50 pl-9 pr-24 text-sm outline-none focus:border-brand focus:bg-white"
+              placeholder="Search products, services, pros, containers…"
+              className="input !h-11 !bg-white pl-11 pr-24"
             />
-            <button className={`${accent} absolute right-1 top-1/2 h-8 -translate-y-1/2 rounded-md px-4 text-sm font-semibold text-white`}>
+            <button className={`${accent} absolute right-1.5 top-1/2 h-8 -translate-y-1/2 rounded-lg px-4 text-sm font-bold text-white transition-transform active:scale-95`}>
               Search
             </button>
           </form>
 
-          <Link href="/cart" className="relative hidden items-center gap-1.5 text-sm font-semibold hover:text-brand sm:flex">
+          <Link href="/cart" className="relative hidden items-center gap-1.5 text-sm font-bold hover:text-brand sm:flex">
             <ShoppingCart size={19} /> Cart
-            <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold text-white">3</span>
+            <span className="absolute -right-2.5 -top-1.5 grid h-4.5 w-4.5 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold text-white">3</span>
           </Link>
-          <Link href="/account" className="hidden items-center gap-1.5 text-sm font-semibold hover:text-brand md:flex">
+          <Link href="/account" className="hidden items-center gap-1.5 text-sm font-bold hover:text-brand md:flex">
             Account <ChevronDown size={14} />
           </Link>
           <button className="lg:hidden" onClick={() => setOpen(!open)} aria-label="Menu">

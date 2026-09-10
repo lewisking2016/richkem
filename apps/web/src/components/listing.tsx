@@ -8,36 +8,36 @@ const fmt = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/
 export function ListingCard({ l, compact = false }: { l: Listing; compact?: boolean }) {
   const href = l.kind === "product" ? `/product/${l.slug}` : `/service/${l.slug}`;
   return (
-    <Link href={href} className="card group relative flex flex-col overflow-hidden hover:shadow-md">
+    <Link href={href} className="card card-hover group relative flex flex-col overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
-        <Image src={l.image} alt={l.title} fill sizes="(max-width:768px) 50vw, 25vw" className="object-cover transition-transform group-hover:scale-105" />
-        {l.official && <span className="badge bg-brand absolute left-2 top-2 text-white">Official Store</span>}
-        {l.kind === "service" && <span className="badge bg-jiji absolute left-2 top-2 text-white">Service</span>}
+        <Image src={l.image} alt={l.title} fill sizes="(max-width:768px) 50vw, 25vw" className="img-zoom object-cover" />
+        {l.official && <span className="badge bg-brand absolute left-2.5 top-2.5 text-white">Official Store</span>}
+        {l.kind === "service" && <span className="badge bg-jiji absolute left-2.5 top-2.5 text-white">Service</span>}
         {l.compareAt && (
-          <span className="badge absolute right-2 top-2 bg-danger text-white">
+          <span className="badge absolute right-2.5 top-2.5 bg-danger text-white">
             -{Math.round((1 - l.price / l.compareAt) * 100)}%
           </span>
         )}
-        <span className="absolute bottom-2 right-2 grid h-8 w-8 place-items-center rounded-full bg-white/90 shadow hover:bg-white">
+        <span className="absolute bottom-2.5 right-2.5 grid h-8 w-8 place-items-center rounded-full bg-white/95 shadow transition-transform hover:scale-110">
           <Heart size={15} className="text-muted" />
         </span>
       </div>
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <h3 className="line-clamp-2 text-[13px] font-medium leading-snug hover:text-brand">{l.title}</h3>
+      <div className="flex flex-1 flex-col gap-1 p-3.5">
+        <h3 className="line-clamp-2 text-[13.5px] font-semibold leading-snug group-hover:text-brand">{l.title}</h3>
         <div className="mt-auto">
           <div className="flex items-baseline gap-1.5">
-            <span className="text-[17px] font-extrabold">{money(l.price)}</span>
+            <span className="price text-[17px]">{money(l.price)}</span>
             {l.compareAt && <span className="text-xs text-muted line-through">{money(l.compareAt)}</span>}
           </div>
           {!compact && (
             <div className="mt-1.5 flex items-center justify-between text-[11px] text-muted">
-              <span className="truncate">{l.seller.name}</span>
+              <span className="truncate font-medium">{l.seller.name}</span>
               <span className="inline-flex items-center gap-0.5"><MapPin size={11} /> {l.location.split(",")[0]}</span>
             </div>
           )}
-          {l.escrow && !compact && (
-            <div className="text-money mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold">
-              <ShieldCheck size={12} /> Pay with escrow
+          {l.escrow && (
+            <div className="text-money mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold">
+              <ShieldCheck size={12} /> Escrow protected
             </div>
           )}
         </div>
@@ -48,7 +48,7 @@ export function ListingCard({ l, compact = false }: { l: Listing; compact?: bool
 
 export function ListingRow({ l }: { l: Listing }) {
   return (
-    <Link href={l.kind === "product" ? `/product/${l.slug}` : `/service/${l.slug}`} className="card flex gap-3 p-2.5 hover:shadow-md sm:gap-4">
+    <Link href={l.kind === "product" ? `/product/${l.slug}` : `/service/${l.slug}`} className="card card-hover flex gap-3 p-2.5 sm:gap-4">
       <div className="relative h-28 w-36 shrink-0 overflow-hidden rounded-lg bg-gray-100 sm:h-32 sm:w-48">
         <Image src={l.image} alt={l.title} fill sizes="192px" className="object-cover" />
       </div>
@@ -57,7 +57,7 @@ export function ListingRow({ l }: { l: Listing }) {
           <h3 className="line-clamp-2 font-semibold hover:text-brand">{l.title}</h3>
           <button className="grid h-8 w-8 shrink-0 place-items-center rounded-full hover:bg-gray-100"><Heart size={16} className="text-muted" /></button>
         </div>
-        <div className="mt-1 text-xl font-extrabold">{money(l.price)}</div>
+        <div className="price mt-1 text-xl">{money(l.price)}</div>
         {l.condition && <div className="text-xs text-muted">Condition: {l.condition}</div>}
         <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted">
           <span className="font-semibold text-ink">{l.seller.name}</span>
