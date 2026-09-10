@@ -35,7 +35,7 @@ Based on live user research (Trustpilot, Reddit r/Kenya, App Store reviews, UX c
 
 ## 3. The aesthetic (frontend-developer + high-end-visual-design skills)
 
-- **Identity**: Richkem Orange `#f68b1e` refined with deep ink `#141414`, warm paper `#faf9f7`, money-green `#0a7d43` reserved ONLY for trust/escrow (semantic color discipline)
+- **Identity**: Richkem Jungle Green `#0f8a47` (primary brand + trust color) with deep ink `#141414`, warm paper `#faf9f7`. Icon language: Lucide icons only — no emojis anywhere in the product (design rule, enforced by sweep)
 - **Type scale**: tight tracking, heavy weights for prices/headers (marketplace scan-ability)
 - **Elevation**: 3-level soft shadow system (rest/hover/pop) instead of borders-everywhere
 - **Motion**: 160ms ease-out micro-interactions — card lift, image zoom, badge pop; `prefers-reduced-motion` respected
