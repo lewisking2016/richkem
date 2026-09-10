@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Search, ShoppingCart, Menu, X, Store, MapPin, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Search, ShoppingCart, Menu, X, Store, MapPin, ChevronDown, ShieldCheck } from "lucide-react";
+import { useStore } from "@/lib/store";
 
 const cats = [
   "Phones & Tablets", "Electronics", "Vehicles", "Home & Office",
@@ -11,10 +13,18 @@ const cats = [
 
 export default function Header({ variant = "market" }: { variant?: "market" | "services" }) {
   const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
+  const router = useRouter();
+  const { cartCount } = useStore();
   const accent = variant === "services" ? "bg-jiji" : "bg-brand";
 
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(q.trim() ? `/search?q=${encodeURIComponent(q.trim())}` : "/search");
+  };
+
   return (
-    <header className="sticky top-0 z-50 shadow-sm">
+    <header className="sticky top-0 z-50">
       {/* top strip */}
       <div className={`${accent} text-white text-[12.5px]`}>
         <div className="mx-auto flex h-9 max-w-6xl items-center gap-4 px-4">
@@ -42,21 +52,27 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
             </span>
           </Link>
 
-          <form className="relative flex-1" action="/search">
+          <form className="relative flex-1" onSubmit={submit}>
             <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
             <input
               name="q"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
               placeholder="Search products, services, pros, containers…"
               className="input !h-11 !bg-white pl-11 pr-24"
             />
-            <button className={`${accent} absolute right-1.5 top-1/2 h-8 -translate-y-1/2 rounded-lg px-4 text-sm font-bold text-white transition-transform active:scale-95`}>
+            <button type="submit" className={`${accent} absolute right-1.5 top-1/2 h-8 -translate-y-1/2 rounded-lg px-4 text-sm font-bold text-white transition-transform active:scale-95`}>
               Search
             </button>
           </form>
 
           <Link href="/cart" className="relative hidden items-center gap-1.5 text-sm font-bold hover:text-brand sm:flex">
             <ShoppingCart size={19} /> Cart
-            <span className="absolute -right-2.5 -top-1.5 grid h-4.5 w-4.5 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold text-white">3</span>
+            {cartCount > 0 && (
+              <span key={cartCount} className="absolute -right-2.5 -top-1.5 grid h-4.5 min-w-4.5 animate-[pop_.25s_ease-out] place-items-center rounded-full bg-ink px-1 text-[10px] font-bold text-white">
+                {cartCount}
+              </span>
+            )}
           </Link>
           <Link href="/account" className="hidden items-center gap-1.5 text-sm font-bold hover:text-brand md:flex">
             Account <ChevronDown size={14} />
@@ -74,7 +90,7 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
               {c}
             </Link>
           ))}
-          <span className="ml-auto inline-flex items-center gap-1 font-bold text-money"><Store size={13} /> Escrow protected</span>
+          <span className="text-money ml-auto inline-flex items-center gap-1 font-bold"><ShieldCheck size={13} /> Escrow protected</span>
         </nav>
       </div>
 
@@ -83,15 +99,23 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
         <div className="border-t bg-white p-4 lg:hidden">
           <div className="grid grid-cols-2 gap-2 text-sm font-semibold">
             {cats.map((c) => (
-              <Link key={c} href="/search" onClick={() => setOpen(false)} className="rounded-lg border border-line px-3 py-2.5">{c}</Link>
+              <Link key={c} href={`/category/${c.toLowerCase().replace(/[^a-z]+/g, "-").replace(/(^-|-$)/g, "")}`} onClick={() => setOpen(false)} className="rounded-lg border border-line px-3 py-2.5">{c}</Link>
             ))}
           </div>
           <div className="mt-3 flex gap-2">
             <Link href="/account" onClick={() => setOpen(false)} className="btn btn-outline btn-sm flex-1">Account</Link>
-            <Link href="/cart" onClick={() => setOpen(false)} className="btn btn-primary btn-sm flex-1">Cart</Link>
+            <Link href="/cart" onClick={() => setOpen(false)} className="btn btn-primary btn-sm flex-1">Cart ({cartCount})</Link>
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes pop {
+          0% { transform: scale(0.4); }
+          70% { transform: scale(1.25); }
+          100% { transform: scale(1); }
+        }
+      `}</style>
     </header>
   );
 }

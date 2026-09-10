@@ -1,17 +1,40 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { use, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShieldCheck, MapPin, Star, Truck, RotateCcw, Heart, Share2, ChevronRight } from "lucide-react";
-import { findListing, listings, money, sellers } from "@/lib/data";
+import { useRouter } from "next/navigation";
+import { ShieldCheck, MapPin, Star, Truck, RotateCcw, Heart, Share2, ChevronRight, ShoppingCart, Check } from "lucide-react";
+import { findListing, listings, money } from "@/lib/data";
+import { useStore } from "@/lib/store";
 import { ListingCard, SectionHead } from "@/components/listing";
 
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
   const l = findListing(slug);
-  if (!l || l.kind === "service") notFound();
+  const router = useRouter();
+  const { addToCart, toggleSaved, isSaved } = useStore();
+  const [active, setActive] = useState(0);
+  const [added, setAdded] = useState(false);
+
+  if (!l || l.kind === "service") {
+    return (
+      <div className="card grid place-items-center gap-3 py-20 text-center">
+        <h1 className="text-2xl font-extrabold">Item not found</h1>
+        <Link href="/search" className="btn btn-primary">Browse listings</Link>
+      </div>
+    );
+  }
 
   const similar = listings.filter((x) => x.categorySlug === l.categorySlug && x.id !== l.id).slice(0, 5);
   const off = l.compareAt ? Math.round((1 - l.price / l.compareAt) * 100) : 0;
+  const saved = isSaved(l.id);
+
+  const add = (go: boolean) => {
+    addToCart({ id: l.id, title: l.title, price: l.price, image: l.image, seller: l.seller.name, slug: l.slug, kind: "product" });
+    if (go) router.push("/checkout");
+    else { setAdded(true); setTimeout(() => setAdded(false), 1600); }
+  };
 
   return (
     <div className="space-y-8">
@@ -22,17 +45,22 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </nav>
 
       <div className="grid gap-6 lg:grid-cols-[420px_1fr_300px]">
-        {/* GALLERY */}
+        {/* GALLERY — clickable thumbs + main swap */}
         <div className="space-y-2">
           <div className="card relative aspect-square overflow-hidden">
-            <Image src={l.image} alt={l.title} fill priority sizes="420px" className="object-cover" />
+            <Image key={active} src={l.images?.[active] ?? l.image} alt={l.title} fill priority sizes="420px" className="img-zoom object-cover" />
             {off > 0 && <span className="badge absolute left-3 top-3 bg-danger text-white">-{off}%</span>}
           </div>
           <div className="grid grid-cols-5 gap-2">
             {l.images?.map((src, i) => (
-              <div key={i} className={`relative aspect-square overflow-hidden rounded-lg border-2 ${i === 0 ? "border-brand" : "border-transparent"}`}>
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                aria-label={`View image ${i + 1}`}
+                className={`relative aspect-square overflow-hidden rounded-lg border-2 transition-all ${i === active ? "border-brand" : "border-transparent opacity-70 hover:opacity-100"}`}
+              >
                 <Image src={src} alt="" fill sizes="80px" className="object-cover" />
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -42,8 +70,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="flex items-start justify-between gap-3">
             <h1 className="text-xl font-extrabold leading-snug md:text-2xl">{l.title}</h1>
             <div className="flex gap-1">
-              <button className="card grid h-9 w-9 place-items-center"><Heart size={16} /></button>
-              <button className="card grid h-9 w-9 place-items-center"><Share2 size={16} /></button>
+              <button
+                onClick={() => toggleSaved(l.id)}
+                aria-label={saved ? "Remove from saved" : "Save item"}
+                className={`card grid h-9 w-9 place-items-center transition-transform active:scale-90 ${saved ? "text-danger" : ""}`}
+              >
+                <Heart size={16} className={saved ? "fill-danger" : ""} />
+              </button>
+              <button className="card grid h-9 w-9 place-items-center" aria-label="Share"><Share2 size={16} /></button>
             </div>
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted">
@@ -54,7 +88,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <div className="mt-4 flex items-end gap-3">
-            <span className="text-3xl font-black">{money(l.price)}</span>
+            <span className="price text-3xl">{money(l.price)}</span>
             {l.compareAt && <>
               <span className="text-lg text-muted line-through">{money(l.compareAt)}</span>
               <span className="badge bg-danger-50 text-danger">You save {money(l.compareAt - l.price)}</span>
@@ -82,8 +116,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="card p-4">
             <div className="text-money inline-flex items-center gap-1.5 text-sm font-extrabold"><ShieldCheck size={16} /> Escrow protected</div>
             <p className="mt-1.5 text-xs text-muted">Money held until you confirm delivery. Full refund if item not as described.</p>
-            <button className="btn btn-primary mt-4 w-full">Buy now · {money(l.price)}</button>
-            <button className="btn btn-outline mt-2 w-full">Add to cart</button>
+            <button onClick={() => add(true)} className="btn btn-primary mt-4 w-full">Buy now · {money(l.price)}</button>
+            <button onClick={() => add(false)} className={`btn mt-2 w-full ${added ? "bg-money text-white" : "btn-outline"}`}>
+              {added ? <><Check size={16} /> Added to cart</> : <><ShoppingCart size={16} /> Add to cart</>}
+            </button>
             <div className="mt-4 space-y-2 text-xs text-muted">
               <div className="flex gap-2"><Truck size={14} className="shrink-0" /> Delivery 24–48h Nairobi · 2–4 days countrywide</div>
               <div className="flex gap-2"><RotateCcw size={14} className="shrink-0" /> 7-day free returns</div>

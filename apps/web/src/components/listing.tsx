@@ -1,13 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, ShieldCheck, MapPin } from "lucide-react";
 import { categoryIcons } from "./icons";
+import { useStore } from "@/lib/store";
 import { money, type Listing } from "@/lib/data";
 
 const fmt = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 export function ListingCard({ l, compact = false }: { l: Listing; compact?: boolean }) {
   const href = l.kind === "product" ? `/product/${l.slug}` : `/service/${l.slug}`;
+  const { toggleSaved, isSaved } = useStore();
+  const saved = isSaved(l.id);
   return (
     <Link href={href} className="card card-hover group relative flex flex-col overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
@@ -19,9 +24,13 @@ export function ListingCard({ l, compact = false }: { l: Listing; compact?: bool
             -{Math.round((1 - l.price / l.compareAt) * 100)}%
           </span>
         )}
-        <span className="absolute bottom-2.5 right-2.5 grid h-8 w-8 place-items-center rounded-full bg-white/95 shadow transition-transform hover:scale-110">
-          <Heart size={15} className="text-muted" />
-        </span>
+        <button
+          onClick={(e) => { e.preventDefault(); toggleSaved(l.id); }}
+          aria-label={saved ? "Remove from saved" : "Save item"}
+          className="absolute bottom-2.5 right-2.5 grid h-8 w-8 place-items-center rounded-full bg-white/95 shadow transition-transform hover:scale-110 active:scale-90"
+        >
+          <Heart size={15} className={saved ? "fill-danger text-danger" : "text-muted"} />
+        </button>
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3.5">
         <h3 className="line-clamp-2 text-[13.5px] font-semibold leading-snug group-hover:text-brand">{l.title}</h3>
