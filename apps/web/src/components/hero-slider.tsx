@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShieldCheck, ChevronRight, ChevronLeft, BadgeCheck, Timer, Ship, Stethoscope, Package } from "lucide-react";
 
@@ -69,14 +69,13 @@ const slides = [
 
 export default function HeroSlider() {
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Always-on automation: restart the clock on every slide change (manual or auto)
+  // so each slide gets a full 6s, and the slider never stalls while hovered.
   useEffect(() => {
-    if (paused) return;
-    timer.current = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);
-    return () => { if (timer.current) clearInterval(timer.current); };
-  }, [paused]);
+    const t = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);
+    return () => clearInterval(t);
+  }, [i]);
 
   const s = slides[i];
   const CardIcon = s.card.icon;
@@ -84,8 +83,6 @@ export default function HeroSlider() {
   return (
     <section
       className="card relative overflow-hidden border-0 bg-ink text-white"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
       aria-label="Richkem highlights"
     >
