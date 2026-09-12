@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShieldCheck, Truck, RotateCcw } from "lucide-react";
+import { LogoMark } from "./logo";
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-4 py-10 md:grid-cols-5">
         <div className="col-span-2">
           <div className="flex items-center gap-2">
-            <span className="bg-brand grid h-9 w-9 place-items-center rounded-lg text-lg font-black text-white">R</span>
+            <LogoMark size={34} />
             <span className="text-[17px] font-extrabold">Richkem<span className="text-brand">.</span></span>
           </div>
           <p className="mt-3 max-w-xs text-sm text-muted">

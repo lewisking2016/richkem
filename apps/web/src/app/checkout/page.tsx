@@ -10,7 +10,7 @@ import { money } from "@/lib/data";
 const steps = ["Address", "Delivery", "Payment", "Done"];
 
 export default function Checkout() {
-  const { cart, cartTotal, clearCart } = useStore();
+  const { cart, cartTotal, clearCart, placeOrder } = useStore();
   const router = useRouter();
   const [method, setMethod] = useState<"mpesa" | "on">("mpesa");
   const [deliveryOpt, setDeliveryOpt] = useState<"door" | "pickup">("door");
@@ -32,7 +32,11 @@ export default function Checkout() {
 
   const place = () => {
     setPlacing(true);
-    setTimeout(() => { clearCart(); router.push("/order-success"); }, 900);
+    setTimeout(() => {
+      placeOrder(delivery);
+      clearCart();
+      router.push("/order-success");
+    }, 900);
   };
 
   return (

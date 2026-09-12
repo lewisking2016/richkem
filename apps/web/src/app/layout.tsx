@@ -10,9 +10,14 @@ export const metadata: Metadata = {
   description: "Buy products, book services and shop high-value assets with M-Pesa escrow protection.",
 };
 
+const noFlash = `try{var t=localStorage.getItem("richkem.theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: noFlash }} />
+      </head>
       <body className="min-h-screen pb-16 lg:pb-0">
         <StoreProvider>
           <Header />

@@ -30,7 +30,45 @@
 }
 
 @layer base {
-  :root { color-scheme: light; }
+  @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    --color-brand: #22a35d;
+    --color-brand-600: #1c8a4d;
+    --color-brand-700: #15703e;
+    --color-brand-50: rgb(34 163 93 / 0.12);
+    --color-jiji: #7d9bff;
+    --color-jiji-600: #6a8af5;
+    --color-jiji-50: rgb(125 155 255 / 0.12);
+    --color-ink: #ececec;
+    --color-muted: #9a9da2;
+    --color-line: #2b2b2e;
+    --color-paper: #101012;
+    --color-money: #34c47c;
+    --color-money-50: rgb(52 196 124 / 0.12);
+    --color-danger: #f56b5e;
+    --color-danger-50: rgb(245 107 94 / 0.12);
+    --color-warn: #e8a13c;
+    --color-warn-50: rgb(232 161 60 / 0.12);
+    --shadow-rest: 0 1px 2px rgb(0 0 0 / 0.5), 0 2px 8px rgb(0 0 0 / 0.4);
+    --shadow-hover: 0 4px 12px rgb(0 0 0 / 0.55), 0 12px 32px rgb(0 0 0 / 0.5);
+    --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.6), 0 24px 56px rgb(0 0 0 / 0.55);
+  }
+
+  html.dark body { background: var(--color-paper); }
+  html.dark .card { background: #17171a; border-color: var(--color-line); }
+  html.dark .btn-outline { background: #17171a; }
+  html.dark .btn-outline:hover { border-color: var(--color-ink); }
+  html.dark .glass { background: rgb(16 16 18 / 0.82); }
+  html.dark .input { background: #17171a; }
+  html.dark .chip { background: #17171a; }
+  html.dark .chip-active { background: var(--color-brand); border-color: var(--color-brand); color: #fff; }
+  html.dark .chip-active:hover { border-color: var(--color-brand); color: #fff; }
+}
 
   html { scroll-behavior: smooth; }
 

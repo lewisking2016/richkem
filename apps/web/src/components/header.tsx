@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingCart, Menu, X, Store, MapPin, ChevronDown, ShieldCheck } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, Store, MapPin, ChevronDown, ShieldCheck, Bell } from "lucide-react";
 import { useStore } from "@/lib/store";
+import ThemeToggle from "./theme-toggle";
+import { LogoMark } from "./logo";
 
 const cats = [
   "Phones & Tablets", "Electronics", "Vehicles", "Home & Office",
@@ -45,8 +47,8 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
       {/* main bar — glass */}
       <div className="glass border-b border-line/70">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
-          <Link href="/" className="flex items-center gap-2">
-            <span className={`${accent} grid h-10 w-10 place-items-center rounded-xl text-lg font-black text-white`}>R</span>
+          <Link href="/" className="flex items-center gap-2" aria-label="Richkem home">
+            <LogoMark size={38} />
             <span className="hidden text-[18px] font-black tracking-tight sm:block">
               Richkem<span className={variant === "services" ? "text-jiji" : "text-brand"}>.</span>
             </span>
@@ -66,6 +68,10 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
             </button>
           </form>
 
+          <Link href="/notifications" aria-label="Notifications" className="relative hidden h-9 w-9 place-items-center rounded-lg border border-line text-muted transition-colors hover:border-ink hover:text-ink md:grid">
+            <Bell size={17} />
+            <span className="bg-brand absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full text-[9px] font-bold text-white">3</span>
+          </Link>
           <Link href="/cart" className="relative hidden items-center gap-1.5 text-sm font-bold hover:text-brand sm:flex">
             <ShoppingCart size={19} /> Cart
             {cartCount > 0 && (
@@ -74,6 +80,7 @@ export default function Header({ variant = "market" }: { variant?: "market" | "s
               </span>
             )}
           </Link>
+          <div className="hidden md:block"><ThemeToggle /></div>
           <Link href="/account" className="hidden items-center gap-1.5 text-sm font-bold hover:text-brand md:flex">
             Account <ChevronDown size={14} />
           </Link>

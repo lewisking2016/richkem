@@ -62,7 +62,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <div className="card p-4">
             <div className="text-jiji inline-flex items-center gap-1.5 text-sm font-extrabold"><ShieldCheck size={16} /> Booking protected</div>
             <p className="mt-1.5 text-xs text-muted">Pay a deposit via M-Pesa. Funds released after service is delivered.</p>
-            <Link href="/booking-success" className="btn bg-jiji mt-4 w-full text-white hover:bg-jiji-600"><CalendarCheck size={16} /> Book now</Link>
+            <Link href={`/booking-success?what=${encodeURIComponent(s.title)}&who=${encodeURIComponent(s.seller.name)}&deposit=${Math.round(s.price * 0.3)}&when=${encodeURIComponent("Fri, Sep 11 · 10:00")}`} className="btn bg-jiji mt-4 w-full text-white hover:bg-jiji-600"><CalendarCheck size={16} /> Book now</Link>
             <button className="btn btn-outline mt-2 w-full"><MessageCircle size={16} /> Chat</button>
             <button className="btn btn-outline mt-2 w-full"><Phone size={16} /> Call provider</button>
           </div>

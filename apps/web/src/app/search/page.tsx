@@ -1,7 +1,8 @@
 "use client";
 
 import { use, useEffect, useMemo, useState } from "react";
-import { SearchX, SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
+import { SearchX, SlidersHorizontal, Map } from "lucide-react";
 import { ListingRow, ListingCard } from "@/components/listing";
 import { listings } from "@/lib/data";
 
@@ -30,8 +31,10 @@ export default function SearchPage({ searchParams }: { searchParams: Promise<{ q
   const [sort, setSort] = useState("featured");
   const [filters, setFilters] = useState<Record<string, string[]>>({});
   const [showMobile, setShowMobile] = useState(false);
+  const [visible, setVisible] = useState(10);
 
-  useEffect(() => { setFilters({}); }, [q]);
+  useEffect(() => { setFilters({}); setVisible(10); }, [q]);
+  useEffect(() => { setVisible(10); }, [filters, sort]);
 
   const toggle = (g: string, o: string) =>
     setFilters((prev) => {
@@ -88,6 +91,7 @@ export default function SearchPage({ searchParams }: { searchParams: Promise<{ q
           {q ? <>Results for “{q}” <span className="text-muted text-sm font-medium">({results.length})</span></> : <>All listings <span className="text-muted text-sm font-medium">({results.length})</span></>}
         </h1>
         <div className="flex gap-2">
+          <Link href="/search/map" className="btn btn-outline btn-sm hidden md:inline-flex"><Map size={14} /> Map view</Link>
           <button onClick={() => setShowMobile(!showMobile)} className="btn btn-outline btn-sm lg:hidden">
             <SlidersHorizontal size={14} /> Filters {activeCount > 0 && <span className="badge bg-brand text-white">{activeCount}</span>}
           </button>
@@ -124,8 +128,15 @@ export default function SearchPage({ searchParams }: { searchParams: Promise<{ q
                 {results.slice(0, 6).map((l) => <ListingCard key={l.id} l={l} />)}
               </div>
               <div className="space-y-3">
-                {results.map((l) => <ListingRow key={l.id} l={l} />)}
+                {results.slice(0, visible).map((l) => <ListingRow key={l.id} l={l} />)}
               </div>
+              {visible < results.length && (
+                <div className="pt-2 text-center">
+                  <button onClick={() => setVisible((v) => v + 10)} className="btn btn-outline">
+                    Load more ({results.length - visible} remaining)
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>
