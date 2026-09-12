@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+
+enum KycStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID_HELD
+  SHIPPED
+  DELIVERED
+  COMPLETED
+  DISPUTED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum LedgerEntryType {
+  HOLD
+  RELEASE
+  REFUND
+  FEE
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  phone        String?
+  passwordHash String
+  role         Role      @default(BUYER)
+  kycStatus    KycStatus @default(NONE)
+  createdAt    DateTime  @default(now())
+
+  products        Product[]
+  ordersBought    Order[]       @relation("BuyerOrders")
+  ordersSold      Order[]       @relation("SellerOrders")
+  ledger          LedgerEntry[]
+  reviewsWritten  Review[]      @relation("Reviewer")
+  refreshTokens   RefreshToken[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  slug String @unique
+
+  products Product[]
+}
+
+model Product {
+  id          Int           @id @default(autoincrement())
+  title       String
+  slug        String        @unique
+  description String?
+  priceKes    Int
+  compareAt   Int?
+  status      ProductStatus @default(DRAFT)
+  stock       Int           @default(1)
+  image       String?
+  sellerId    Int
+  seller      User          @relation(fields: [sellerId], references: [id])
+  categoryId  Int?
+  category    Category?     @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime      @default(now())
+
+  orderItems OrderItem[]
+  reviews    Review[]
+
+  @@index([status, priceKes])
+  @@index([sellerId])
+}
+
+model Order {
+  id         Int         @id @default(autoincrement())
+  ref        String      @unique
+  status     OrderStatus @default(PENDING)
+  subtotalKes Int
+  feeKes     Int         @default(0)
+  totalKes   Int
+  buyerId    Int
+  buyer      User        @relation("BuyerOrders", fields: [buyerId], references: [id])
+  sellerId   Int
+  seller     User        @relation("SellerOrders", fields: [sellerId], references: [id])
+  createdAt  DateTime    @default(now())
+
+  items   OrderItem[]
+  payment Payment?
+  ledger  LedgerEntry[]
+
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([status])
+}
+
+model OrderItem {
+  id       Int     @id @default(autoincrement())
+  orderId  Int
+  order    Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int?
+  product  Product? @relation(fields: [productId], references: [id])
+  title    String
+  qty      Int     @default(1)
+  unitKes  Int
+}
+
+model Payment {
+  id                Int           @id @default(autoincrement())
+  orderId           Int           @unique
+  order             Order         @relation(fields: [orderId], references: [id])
+  provider          String        @default("MPESA")
+  phone             String
+  amountKes         Int
+  status            PaymentStatus @default(PENDING)
+  checkoutRequestId String?       @unique
+  mpesaReceipt      String?
+  createdAt         DateTime      @default(now())
+}
+
+model LedgerEntry {
+  id            Int             @id @default(autoincrement())
+  orderId       Int
+  order         Order           @relation(fields: [orderId], references: [id])
+  entryType     LedgerEntryType
+  amountKes     Int
+  balanceAfter  Int
+  ref           String
+  createdAt     DateTime        @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@index([orderId])
+  @@index([userId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @unique
+  rating    Int
+  comment   String?
+  buyerId   Int
+  buyer     User     @relation("Reviewer", fields: [buyerId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+}
